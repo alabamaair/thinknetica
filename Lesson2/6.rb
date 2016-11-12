@@ -3,9 +3,7 @@ loop do
   puts "Введите название товара:"
   name = gets.chomp
 
-  if name == 'стоп'
-    break
-  end
+  break if name == 'стоп'
 
   puts "Введите цену:"
   price = gets.chomp.to_f

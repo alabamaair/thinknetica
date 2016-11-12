@@ -1,12 +1,9 @@
-array = []
-fib1 = 1
-fib2 = 1
-fib_next = fib1 + fib2
-array << fib1 << fib2
+arr = [ 1, 1 ]
+fib_next = arr[0] + arr[1]
+
 while fib_next < 100
-  fib1 = fib2
-  fib2 = fib_next
-  array << fib_next
-  fib_next = fib1 + fib2
+  arr << fib_next
+  fib_next = arr[-2] + arr[-1]
 end
-puts array
+
+puts arr
