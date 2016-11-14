@@ -13,10 +13,9 @@
 # route1.list_stations
 
 class Route
-
   attr_reader :list_stations
 
-  def initialize(start_station,end_station)
+  def initialize(start_station, end_station)
     @start_station = start_station
     @end_station = end_station
     @list_stations = [@start_station, @end_station]

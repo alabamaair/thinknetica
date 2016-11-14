@@ -10,13 +10,12 @@
 # station1.list_trains
 
 # Может показывать список поездов на станции по типу (см. ниже): кол-во грузовых, пассажирских
-# station1.list_types_trains
+# station1.list_types_trains(:passenger)
 
 # Может отправлять поезда (по одному за раз, при этом, поезд удаляется из списка поездов, находящихся на станции).
 # station1.depart_train(train1)
 
 class Station
-  
   attr_writer :name
   attr_reader :list_trains
 
@@ -33,11 +32,9 @@ class Station
     @list_trains.delete(train) if @list_trains
   end
 
-  def list_types_trains
-    count_cargo = @list_trains.count { |train| train.type == :cargo }
-    count_passenger = @list_trains.count { |train| train.type == :passenger }
-    puts "Количество пассажирских поездов: #{count_passenger}"
-    puts "Количество грузовых поездов: #{count_cargo}"
+  def list_types_trains(type)
+    count_type = @list_trains.count { |train| train.type == type }
+    puts "Количество поездов типа #{type}: #{count_type}"
   end
 
 end

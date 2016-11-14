@@ -32,18 +32,17 @@
 # train1.next_station
 
 class Train
-
   attr_accessor :speed
   attr_reader :wagons
   attr_reader :type
 
   attr_accessor :route
-  attr_accessor :station
+  attr_accessor :index_station
 
-  def initialize(number,type,wagons)
+  def initialize(number, type, wagons)
     @number = number
     @type = type
-    @wagons = wagons 
+    @wagons = wagons
   end
 
   def add_wagon
@@ -56,7 +55,7 @@ class Train
 
   def del_wagon
     if @speed == 0
-      @wagons -= 1
+      @wagons > 0 ? @wagons -= 1 : puts('У поезда уже нет ни одного вагона.')
     else
       puts "Сначала остановите поезд!"
     end
@@ -67,7 +66,7 @@ class Train
   end
 
   def go(speed)
-    self.speed = speed
+    speed > 0 ? self.speed += speed : puts('Введите корректное число для набора скорости.')
   end
 
   def stop
@@ -75,32 +74,36 @@ class Train
   end
 
   def current_station
-    @station
+    if @route
+      @index_station ||= 0
+      current_station = @route.list_stations[@index_station]
+    else
+      puts 'Этот поезд еще не имеет маршрута.'
+    end
   end
 
   def next_station
-    index_next_station = self.route.list_stations.index(@station) + 1
-    if index_next_station < self.route.list_stations.count
-      next_st = self.route.list_stations[index_next_station]
+    if @route
+      @index_station < @route.list_stations.count ? next_station = @route.list_stations[@index_station + 1] : puts('Поезд в конце маршрута.')
     else
-      puts "Поезд в конце маршрута."
+      puts 'Этот поезд еще не имеет маршрута.'
     end
   end
 
   def previous_station
-    if self.route.list_stations.index(@station) > 0
-      index_prev_st = self.route.list_stations.index(@station) - 1
-      prev_st = self.route.list_stations[index_prev_st]
+    if @route
+      @index_station > 0 ? previous_station = @route.list_stations[@index_station - 1] : puts('Поезд в начале маршрута.')
     else
-      puts "Поезд в начале маршрута."
+      puts 'Этот поезд еще не имеет маршрута.'
     end
+
   end
 
   def move_to_next_station
-    if self.next_station
-      self.station.depart_train(self)
-      self.station = next_station
-      self.station.arrive_train(self)
+    if @route && self.next_station
+      @index_station += 1
+      self.previous_station.depart_train(self)
+      self.current_station.arrive_train(self)
     end
   end
 
