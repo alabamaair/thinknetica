@@ -7,18 +7,18 @@ class Train
   attr_reader :type
   attr_reader :number
 
-  @@trains = []
+  @@trains = {}
 
   def initialize(params = {})
     @number = params[:number] || 10.times.map { [*'0'..'9', *'a'..'z'].sample }.join
     @index_station = 0
     @speed = 0
     @list_wagons = []
-    @@trains << self
+    @@trains[@number] = self
   end
 
   def self.find(number)
-    @@trains.find { |train| number == train.number }
+    @@trains[number] #{ |train| number == train.number }
   end
 
   def add_wagon(wagon)
