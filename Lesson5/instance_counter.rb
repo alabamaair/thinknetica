@@ -1,20 +1,13 @@
 module InstanceCounter
 
   def self.included(base)
+    base.instance_variable_set :@instances, 0
     base.extend ClassMethods
-    base.send :include, InstanceMethods
+    base.include InstanceMethods
   end
 
   module ClassMethods
-    @@instances = 0
-    
-    def instances
-      @@instances
-    end
-
-    def instances=(x)
-      @@instances = x
-    end
+    attr_accessor :instances
 
   end
 
