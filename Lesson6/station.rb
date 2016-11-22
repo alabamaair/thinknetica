@@ -7,8 +7,8 @@ class Station
   def initialize(name)
     @name = name
     @list_trains = []
-    @@list_stations << self
     validate!
+    @@list_stations << self
   end
 
   def self.all
