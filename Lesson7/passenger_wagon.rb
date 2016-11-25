@@ -14,5 +14,4 @@ class PassengerWagon < Wagon
     @free_seats -= 1
     @occupied_seats += 1
   end
-
 end

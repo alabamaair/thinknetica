@@ -15,8 +15,8 @@ class Station
     @@list_stations
   end
 
-  def take_block(&block)
-    @list_trains.each { |train| yield(train)}
+  def take_block
+    @list_trains.each { |train| yield(train) }
   end
 
   def arrive_train(train)
@@ -41,8 +41,7 @@ class Station
   protected
 
   def validate!
-    raise "Название станции не может быть пустым" if name == ''
+    raise 'Название станции не может быть пустым' if name == ''
     true
   end
-
 end

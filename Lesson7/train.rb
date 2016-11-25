@@ -28,13 +28,13 @@ class Train
     @@trains[number]
   end
 
-  def take_block(&block)
+  def take_block
     @list_wagons.each { |wagon| yield(wagon) }
   end
 
   def add_wagon(wagon)
     if stopped?
-      self.type == wagon.type ? @list_wagons << wagon : false
+      type == wagon.type ? @list_wagons << wagon : false
     else
       false
     end
@@ -42,7 +42,7 @@ class Train
 
   def del_wagon
     if stopped?
-      @list_wagons.size > 0 ? @list_wagons.pop : false
+      !@list_wagons.empty? ? @list_wagons.pop : false
     else
       false
     end
@@ -80,10 +80,10 @@ class Train
   end
 
   def move_to_next_station
-    return unless has_route? && self.next_station
+    return unless has_route? && next_station
     @index_station += 1
-    self.previous_station.depart_train(self)
-    self.current_station.arrive_train(self)
+    previous_station.depart_train(self)
+    current_station.arrive_train(self)
   end
 
   def cargo?
@@ -103,23 +103,20 @@ class Train
   protected
 
   def validate!
-    raise "Номер поезда не может быть короче 5 символов" if number.to_s.size < 5
-    raise "Номер поезда имеет неправильный формат" if number !~ NUMBER_FORMAT
+    raise 'Номер поезда не может быть короче 5 символов' if number.to_s.size < 5
+    raise 'Номер поезда имеет неправильный формат' if number !~ NUMBER_FORMAT
     true
   end
 
   private
 
-  # скорость не должна меняться извне, а только через метод go, поэтому private
   attr_writer :speed
 
-  # все методы ниже приватные, потому что используются только внутри класса для проверок, снаружи их вызывать не нужно
   def has_route?
     !@route.nil?
   end
 
   def stopped?
-    @speed == 0
+    @speed.zero?
   end
-
 end

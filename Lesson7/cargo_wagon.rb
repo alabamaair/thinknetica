@@ -1,23 +1,21 @@
 class CargoWagon < Wagon
-  attr_reader :free_capasity
-  attr_reader :occupied_capasity
+  attr_reader :free_capacity
+  attr_reader :occupied_capacity
 
-  def initialize(capasity)
+  def initialize(capacity)
     @type = :cargo
-    @capasity = capasity.to_i
-    @free_capasity = capasity.to_i
-    @occupied_capasity = 0
+    @capacity = capacity.to_i
+    @free_capacity = capacity.to_i
+    @occupied_capacity = 0
   end
 
-  def take_capasity(volume)
-    return if @occupied_capasity >= @capasity
-    @occupied_capasity = @occupied_capasity + volume.to_i
-    @free_capasity = @capasity - @occupied_capasity
-    if @occupied_capasity > @capasity
-      @free_capasity = 0
-      @occupied_capasity = @capasity
+  def take_capacity(volume)
+    return if @occupied_capacity >= @capacity
+    @occupied_capacity += volume.to_i
+    @free_capacity = @capacity - @occupied_capacity
+    if @occupied_capacity > @capacity
+      @free_capacity = 0
+      @occupied_capacity = @capacity
     end
   end
-
-
 end
