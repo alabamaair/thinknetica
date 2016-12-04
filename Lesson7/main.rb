@@ -1,5 +1,6 @@
 class Main
   require_relative 'manufacturer'
+  require_relative 'validation'
   require_relative 'train'
   require_relative 'cargo_train'
   require_relative 'passenger_train'
@@ -32,11 +33,11 @@ class Main
       @index_stations ||= 0
 
       loop do
-        puts 'Для выхода из процедуры просто нажмите Enter, оставив название станции пустым'
+        puts 'Для выхода из процедуры введите 0 (цифру ноль)'
         puts 'Для создания станции введите еe название:'
         print ' > '
         name = $stdin.gets.strip
-        if name == ''
+        if name == '0'
           print_stations(@stations)
           start
         else
@@ -44,6 +45,9 @@ class Main
           @index_stations += 1
         end
       end
+    rescue RuntimeError => e
+      puts e.message
+      retry
     end
 
     def create_train

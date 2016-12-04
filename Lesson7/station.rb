@@ -1,12 +1,18 @@
 class Station
+  include Validation
+
   attr_accessor :name
   attr_reader :list_trains
+
+  validate :name, :presence
+  validate :type, :type, Station
 
   @@list_stations = []
 
   def initialize(name)
     @name = name
     @list_trains = []
+    @type = self
     validate!
     @@list_stations << self
   end
@@ -30,18 +36,5 @@ class Station
   def list_types_trains(type)
     count_type = @list_trains.count { |train| train.type == type }
     puts "Количество поездов типа #{type}: #{count_type}"
-  end
-
-  def valid?
-    validate!
-  rescue
-    false
-  end
-
-  protected
-
-  def validate!
-    raise 'Название станции не может быть пустым' if name == ''
-    true
   end
 end
